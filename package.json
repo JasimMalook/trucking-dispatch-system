@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A modern, professional trucking dispatch website built with React and Tailwind CSS",
   "private": true,
-  "homepage": "https://truckingdispatchpro.com",
+  "homepage": ".",
   "keywords": [
     "trucking",
     "dispatch",
@@ -26,9 +26,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -52,14 +50,6 @@
     "@types/node": "^18.19.130",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.24",
-    "tailwindcss": "^3.3.0",
-    "gh-pages": "^5.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/username/trucking-dispatch-website.git"
-  },
-  "bugs": {
-    "url": "https://github.com/username/trucking-dispatch-website/issues"
+    "tailwindcss": "^3.3.0"
   }
 }
