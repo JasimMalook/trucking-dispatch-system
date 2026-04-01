@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Debug Page</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Debug Page</h1>
+    <p>Testing if server responds correctly...</p>
+    <div id="test-result"></div>
+    
+    <script>
+        fetch('http://localhost:3000')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('test-result').innerHTML = 
+                    '<div class="success">✅ Server is responding correctly!</div>';
+            })
+            .catch(error => {
+                document.getElementById('test-result').innerHTML = 
+                    '<div class="error">❌ Server error: ' + error.message + '</div>';
+            });
+    </script>
+</body>
+</html>
