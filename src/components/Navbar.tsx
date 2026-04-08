@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,6 +17,12 @@ const Navbar: React.FC = () => {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
+    if (location.pathname !== '/') {
+      sessionStorage.setItem('pendingScrollTarget', targetId);
+      navigate('/');
+      return;
+    }
+
     const element = document.getElementById(targetId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -21,6 +30,12 @@ const Navbar: React.FC = () => {
   };
 
   const handleQuoteClick = () => {
+    if (location.pathname !== '/') {
+      sessionStorage.setItem('pendingScrollTarget', 'contact');
+      navigate('/');
+      return;
+    }
+
     const element = document.getElementById('contact');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -61,10 +76,13 @@ const Navbar: React.FC = () => {
             >
               Testimonials
             </a>
-            <a 
-              href="#dashboard" 
+            <a
+              href="/dashboard"
               className="text-white hover:text-orange transition-colors"
-              onClick={(e) => handleNavClick(e, 'dashboard')}
+              onClick={(e) => {
+                e.preventDefault();
+                navigate('/dashboard');
+              }}
             >
               Dashboard
             </a>

@@ -1,60 +1,20 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Services from './components/Services';
-import SmartFeatures from './components/SmartFeatures';
-import HowItWorks from './components/HowItWorks';
-import Testimonials from './components/Testimonials';
-import Dashboard from './components/Dashboard';
-import CTASection from './components/CTASection';
-import TrustBadges from './components/TrustBadges';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
-import FloatingButtons from './components/FloatingButtons';
-import DataManager from './components/DataManager';
+import HomePage from './pages/HomePage';
+import DashboardPage from './pages/DashboardPage';
 
 function App() {
-  useEffect(() => {
-    // Enable smooth scrolling for the entire app
-    document.documentElement.style.scrollBehavior = 'smooth';
-    
-    return () => {
-      document.documentElement.style.scrollBehavior = '';
-    };
-  }, []);
-
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white flex flex-col">
       <Navbar />
-      <Hero />
-      <TrustBadges />
-      <Services />
-      <CTASection 
-        title="Ready to Maximize Your Revenue?"
-        subtitle="Join 100+ drivers who are already earning more with our expert dispatch services"
-        buttonText="Start Earning More"
-        showUrgency={true}
-      />
-      <SmartFeatures />
-      <HowItWorks />
-      <CTASection 
-        title="See How It Works in 3 Simple Steps"
-        subtitle="Get started in minutes and see results within 24 hours"
-        buttonText="Get Started Now"
-        variant="secondary"
-      />
-      <Testimonials />
-      <Dashboard />
-      <CTASection 
-        title="Take Control of Your Trucking Business Today"
-        subtitle="Limited spots available - secure your place now and start maximizing your revenue"
-        buttonText="Claim Your Spot"
-        showUrgency={true}
-      />
-      <Contact />
-      <Footer />
-      <FloatingButtons />
-      <DataManager />
+      <main className="flex-1">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </main>
     </div>
   );
 }
