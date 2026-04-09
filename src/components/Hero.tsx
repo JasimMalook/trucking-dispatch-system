@@ -1,58 +1,51 @@
 import React from 'react';
 
 const Hero: React.FC = () => {
-  const handleCTAClick = () => {
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
+  const handleDemoClick = () => {
+    window.dispatchEvent(new Event('open-booking-modal'));
+  };
+
+  const handleDashboardClick = () => {
+    const dashboardSection = document.getElementById('dashboard');
+    if (dashboardSection) {
+      dashboardSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   return (
     <section className="relative bg-gradient-to-br from-dark-blue to-blue-900 text-white">
       <div className="container mx-auto px-4 py-20 lg:py-32">
-        {/* Urgency Badge */}
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-full">
-            <span className="animate-pulse mr-2">🔥</span>
-            <span className="font-semibold">LIMITED SLOTS: Only 3 spots left this week</span>
-          </div>
-        </div>
-
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-            Get More Loads & Maximize Your Trucking Revenue
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-2xl mx-auto">
-            Professional dispatch services that keep your trucks moving and your profits growing
-          </p>
-          
-          {/* Trust Indicators */}
-          <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8 mb-8 text-sm">
-            <div className="flex items-center">
-              <span className="text-green-400 mr-2">✓</span>
-              <span>100+ Drivers Managed</span>
-            </div>
-            <div className="flex items-center">
-              <span className="text-green-400 mr-2">✓</span>
-              <span>24/7 Support</span>
-            </div>
-            <div className="flex items-center">
-              <span className="text-green-400 mr-2">✓</span>
-              <span>No Contracts</span>
-            </div>
+          <div className="inline-flex items-center px-4 py-2 bg-blue-800 bg-opacity-50 text-blue-200 rounded-full mb-8 border border-blue-700">
+            <span className="font-semibold text-sm">Next-Generation Logistics Platform</span>
           </div>
-
-          <button 
-            onClick={handleCTAClick}
-            className="bg-orange hover:bg-orange-600 text-white font-bold text-lg px-8 py-4 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-          >
-            Get Free Quote →
-          </button>
           
-          <p className="text-blue-200 mt-4 text-sm">
-            Join 100+ drivers already maximizing their revenue
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+            AI Powered Trucking & Dispatch Management System
+          </h1>
+          
+          <p className="text-xl md:text-2xl mb-4 text-orange max-w-3xl mx-auto font-medium">
+            Built for Freight Brokers, Trucking Companies, and Owner Operators.
           </p>
+          
+          <p className="text-lg md:text-xl mb-10 text-blue-200 max-w-2xl mx-auto">
+            Manage loads, drivers, invoices, and automation in one powerful platform designed for modern trucking businesses.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+            <button 
+              onClick={handleDemoClick}
+              className="w-full sm:w-auto bg-orange hover:bg-orange-600 text-white font-bold text-lg px-8 py-4 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            >
+              Book Free Demo
+            </button>
+            <button 
+              onClick={handleDashboardClick}
+              className="w-full sm:w-auto bg-transparent hover:bg-white hover:bg-opacity-10 text-white border-2 border-white font-bold text-lg px-8 py-4 rounded-lg transition-all duration-300 transform hover:-translate-y-1"
+            >
+              View Live Dashboard
+            </button>
+          </div>
         </div>
       </div>
       <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent"></div>

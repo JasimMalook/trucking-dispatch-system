@@ -42,9 +42,12 @@ const Navbar: React.FC = () => {
     }
   };
 
+  // Make the navbar solid immediately on non-home pages
+  const isSolid = isScrolled || location.pathname !== '/';
+
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-dark-blue shadow-lg' : 'bg-transparent'
+      isSolid ? 'bg-dark-blue shadow-lg' : 'bg-transparent'
     }`}>
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
@@ -95,12 +98,20 @@ const Navbar: React.FC = () => {
             </a>
           </div>
 
-          <button 
-            onClick={handleQuoteClick}
-            className="bg-orange hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-lg transition-colors"
-          >
-            Get Free Quote
-          </button>
+          <div className="flex items-center space-x-4">
+            <button 
+              onClick={() => navigate('/login')}
+              className="hidden md:block text-white hover:text-orange font-semibold transition-colors"
+            >
+              Login
+            </button>
+            <button 
+              onClick={() => window.dispatchEvent(new Event('open-booking-modal'))}
+              className="bg-orange hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-lg transition-colors shadow-md"
+            >
+              Book Free Demo
+            </button>
+          </div>
         </div>
       </div>
     </nav>

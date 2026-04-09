@@ -164,10 +164,13 @@ const Dashboard: React.FC = () => {
     <section id="dashboard" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-dark-blue mb-4">Dispatch Dashboard</h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Real-time tracking of your fleet and operations
+          <h1 className="text-4xl font-bold text-dark-blue mb-4">Powerful Dispatch Control Center</h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-6">
+            Manage drivers, track loads, communicate with brokers, and automate your dispatch operations.
           </p>
+          <button className="bg-orange hover:bg-orange-600 text-white font-bold px-8 py-3 rounded-lg transition-colors shadow-lg">
+            Explore Dashboard
+          </button>
         </div>
 
         {/* Stats Cards */}

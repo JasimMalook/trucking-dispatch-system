@@ -16,10 +16,7 @@ const CTASection: React.FC<CTASectionProps> = ({
   variant = "primary" 
 }) => {
   const handleCTAClick = () => {
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    window.dispatchEvent(new Event('open-booking-modal'));
   };
 
   const baseClasses = variant === "primary" 

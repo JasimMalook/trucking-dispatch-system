@@ -3,28 +3,40 @@ import React from 'react';
 const SmartFeatures: React.FC = () => {
   const features = [
     {
-      icon: '🤖',
-      title: 'Automated Load Matching',
-      description: 'Our AI-powered system instantly matches your trucks with the highest-paying loads in your area, reducing dead miles and maximizing revenue.',
-      highlights: ['AI-Powered', 'Instant Matching', 'Revenue Optimization']
+      icon: '📦',
+      title: 'Load Management',
+      description: 'Easily find, assign, and track loads in real-time. Optimize routes and minimize empty miles with smart load matching.',
+      highlights: ['Smart Matching', 'Route Optimization', 'Live Tracking']
+    },
+    {
+      icon: '👥',
+      title: 'Driver Management',
+      description: 'Comprehensive tools for onboarding, document tracking, status updates, and communicating with your entire fleet.',
+      highlights: ['Document Storage', 'Live Status', 'Fleet Communication']
     },
     {
       icon: '📞',
-      title: '24/7 Dispatch Support',
-      description: 'Round-the-clock expert dispatch team handling rate negotiations, paperwork, and load coordination while you focus on driving.',
-      highlights: ['Always Available', 'Expert Negotiators', 'Complete Support']
+      title: 'Broker Communication',
+      description: 'Streamline rate negotiations, share live tracking updates, and manage broker relationships from a unified dashboard.',
+      highlights: ['Direct Messaging', 'Rate Negotiation', 'Automated Updates']
     },
     {
-      icon: '📍',
-      title: 'Real-time Tracking',
-      description: 'Advanced GPS tracking with live updates, route optimization, and delivery monitoring for complete visibility of your fleet.',
-      highlights: ['Live GPS', 'Route Optimization', 'Delivery Monitoring']
+      icon: '💰',
+      title: 'Invoice Tracking',
+      description: 'Generate professional invoices, track payments, submit PODs instantly, and manage your cash flow with ease.',
+      highlights: ['Instant PODs', 'Payment Tracking', 'Financial Reports']
     },
     {
-      icon: '🔔',
-      title: 'Smart Notifications',
-      description: 'Intelligent alerts for load opportunities, delivery confirmations, payment processing, and critical updates sent to your preferred channels.',
-      highlights: ['Instant Alerts', 'Multi-channel', 'Customizable']
+      icon: '⚙️',
+      title: 'Dispatch Automation',
+      description: 'Automate repetitive tasks like status updates and rate confirmations so you can focus on growing your business.',
+      highlights: ['Workflow Automation', 'Auto-Updates', 'Smart Alerts']
+    },
+    {
+      icon: '🎯',
+      title: 'Lead Generation Tools',
+      description: 'Access premium load boards, discover new brokers, and secure dedicated lanes with built-in networking tools.',
+      highlights: ['Premium Load Boards', 'Broker Discovery', 'Dedicated Lanes']
     }
   ];
 
