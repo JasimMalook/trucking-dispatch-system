@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
@@ -6,14 +6,26 @@ const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
 
+    const handleClickOutside = (event: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    document.addEventListener('mousedown', handleClickOutside);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
@@ -37,7 +49,7 @@ const Navbar: React.FC = () => {
   const isSolid = isScrolled || location.pathname !== '/';
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+    <nav ref={navRef} className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isSolid ? 'bg-dark-blue shadow-lg' : 'bg-transparent'
     }`}>
       <div className="container mx-auto px-4">
@@ -137,8 +149,14 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden bg-dark-blue border-t border-gray-700 py-4 absolute left-0 right-0 top-16 shadow-xl">
+        <div 
+          className={`md:hidden absolute left-0 right-0 top-16 shadow-xl transition-all duration-300 ease-in-out ${
+            isMobileMenuOpen 
+              ? 'opacity-100 translate-y-0 pointer-events-auto visible' 
+              : 'opacity-0 -translate-y-4 pointer-events-none invisible'
+          }`}
+        >
+          <div className="bg-dark-blue border-t border-gray-700 py-4">
             <div className="flex flex-col space-y-4 px-4 pb-4">
               <a 
                 href="#features" 
@@ -207,7 +225,7 @@ const Navbar: React.FC = () => {
               </div>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </nav>
   );

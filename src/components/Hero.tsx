@@ -1,15 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Hero: React.FC = () => {
+  const navigate = useNavigate();
+
   const handleDemoClick = () => {
     window.dispatchEvent(new Event('open-booking-modal'));
   };
 
   const handleDashboardClick = () => {
-    const dashboardSection = document.getElementById('dashboard');
-    if (dashboardSection) {
-      dashboardSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    navigate('/dashboard');
   };
 
   return (
