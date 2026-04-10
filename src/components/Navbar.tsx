@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -17,6 +18,7 @@ const Navbar: React.FC = () => {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
+    setIsMobileMenuOpen(false);
     if (location.pathname !== '/') {
       sessionStorage.setItem('pendingScrollTarget', targetId);
       navigate('/');
@@ -109,13 +111,103 @@ const Navbar: React.FC = () => {
               {localStorage.getItem('isAuthenticated') === 'true' ? 'Logout' : 'Login'}
             </button>
             <button 
-              onClick={() => window.dispatchEvent(new Event('open-booking-modal'))}
-              className="bg-orange hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-lg transition-colors shadow-md"
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                window.dispatchEvent(new Event('open-booking-modal'));
+              }}
+              className="hidden md:block bg-orange hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-lg transition-colors shadow-md"
             >
               Book Free Demo
             </button>
+
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden text-white focus:outline-none"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {isMobileMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                )}
+              </svg>
+            </button>
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden bg-dark-blue border-t border-gray-700 py-4 absolute left-0 right-0 top-16 shadow-xl">
+            <div className="flex flex-col space-y-4 px-4 pb-4">
+              <a 
+                href="#services" 
+                className="text-white hover:text-orange transition-colors"
+                onClick={(e) => handleNavClick(e, 'services')}
+              >
+                Services
+              </a>
+              <a 
+                href="#how-it-works" 
+                className="text-white hover:text-orange transition-colors"
+                onClick={(e) => handleNavClick(e, 'how-it-works')}
+              >
+                How It Works
+              </a>
+              <a 
+                href="#testimonials" 
+                className="text-white hover:text-orange transition-colors"
+                onClick={(e) => handleNavClick(e, 'testimonials')}
+              >
+                Testimonials
+              </a>
+              <a
+                href="/dashboard"
+                className="text-white hover:text-orange transition-colors"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsMobileMenuOpen(false);
+                  navigate('/dashboard');
+                }}
+              >
+                Dashboard
+              </a>
+              <a 
+                href="#contact" 
+                className="text-white hover:text-orange transition-colors"
+                onClick={(e) => handleNavClick(e, 'contact')}
+              >
+                Contact
+              </a>
+              
+              <div className="border-t border-gray-600 pt-4 mt-2 flex flex-col space-y-4">
+                <button 
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    if (localStorage.getItem('isAuthenticated') === 'true') {
+                      localStorage.removeItem('isAuthenticated');
+                      navigate('/');
+                    } else {
+                      navigate('/login');
+                    }
+                  }}
+                  className="text-left text-white hover:text-orange font-semibold transition-colors"
+                >
+                  {localStorage.getItem('isAuthenticated') === 'true' ? 'Logout' : 'Login'}
+                </button>
+                <button 
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    window.dispatchEvent(new Event('open-booking-modal'));
+                  }}
+                  className="bg-orange hover:bg-orange-600 text-white font-semibold px-4 py-2 rounded-lg transition-colors shadow-md text-center"
+                >
+                  Book Free Demo
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );
