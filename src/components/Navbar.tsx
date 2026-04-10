@@ -89,10 +89,17 @@ const Navbar: React.FC = () => {
 
           <div className="flex items-center space-x-4">
             <button 
-              onClick={() => navigate('/login')}
+              onClick={() => {
+                if (localStorage.getItem('isAuthenticated') === 'true') {
+                  localStorage.removeItem('isAuthenticated');
+                  navigate('/');
+                } else {
+                  navigate('/login');
+                }
+              }}
               className="hidden md:block text-white hover:text-orange font-semibold transition-colors"
             >
-              Login
+              {localStorage.getItem('isAuthenticated') === 'true' ? 'Logout' : 'Login'}
             </button>
             <button 
               onClick={() => window.dispatchEvent(new Event('open-booking-modal'))}
