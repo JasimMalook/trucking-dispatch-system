@@ -64,11 +64,11 @@ const Navbar: React.FC = () => {
               Platform
             </a>
             <a 
-              href="#driver-benefits" 
+              href="#services" 
               className="text-white hover:text-orange transition-colors"
-              onClick={(e) => handleNavClick(e, 'driver-benefits')}
+              onClick={(e) => handleNavClick(e, 'services')}
             >
-              Benefits
+              Services
             </a>
             <a 
               href="#pricing" 
@@ -148,11 +148,11 @@ const Navbar: React.FC = () => {
                 Platform
               </a>
               <a 
-                href="#driver-benefits" 
+                href="#services" 
                 className="text-white hover:text-orange transition-colors"
-                onClick={(e) => handleNavClick(e, 'driver-benefits')}
+                onClick={(e) => handleNavClick(e, 'services')}
               >
-                Benefits
+                Services
               </a>
               <a 
                 href="#pricing" 

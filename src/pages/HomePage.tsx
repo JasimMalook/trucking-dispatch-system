@@ -3,7 +3,7 @@ import Hero from '../components/Hero';
 import TargetAudience from '../components/TargetAudience';
 import HowItWorks from '../components/HowItWorks';
 import SmartFeatures from '../components/SmartFeatures';
-import DriverBenefits from '../components/DriverBenefits';
+import Services from '../components/Services';
 import Testimonials from '../components/Testimonials';
 import Pricing from '../components/Pricing';
 import CTASection from '../components/CTASection';
@@ -34,7 +34,7 @@ const HomePage: React.FC = () => {
       <TargetAudience />
       <HowItWorks />
       <SmartFeatures />
-      <DriverBenefits />
+      <Services />
       <Testimonials />
       <Pricing />
       <CTASection
