@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState('demo@dispatch.com');
+  const [email, setEmail] = useState('demo@trucking.com');
   const [password, setPassword] = useState('demo123');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (email === 'demo@dispatch.com' && password === 'demo123') {
+    const isDemoAccount = (email === 'demo@trucking.com' || email === 'demo@dispatch.com') && password === 'demo123';
+
+    if (isDemoAccount) {
       localStorage.setItem('isAuthenticated', 'true');
       navigate('/dashboard');
     } else {
@@ -38,10 +40,19 @@ const LoginPage: React.FC = () => {
         </div>
         
         <div className="p-8">
-          <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 mb-6 text-sm text-blue-800">
-            <strong>Demo Credentials:</strong><br/>
-            Email: demo@dispatch.com<br/>
-            Password: demo123
+          <div className="bg-orange bg-opacity-10 border border-orange rounded-lg p-5 mb-6 text-sm text-gray-800 flex flex-col sm:flex-row items-center justify-between shadow-sm">
+            <div>
+              <strong className="text-dark-blue">Demo Credentials:</strong><br/>
+              Email: <span className="font-mono text-orange font-bold">demo@trucking.com</span><br/>
+              Password: <span className="font-mono text-orange font-bold">demo123</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => { setEmail('demo@trucking.com'); setPassword('demo123'); }}
+              className="mt-3 sm:mt-0 bg-white border border-orange hover:bg-orange hover:text-white text-orange px-4 py-2 rounded-md shadow-sm transition-colors text-xs font-bold"
+            >
+              Fill Details
+            </button>
           </div>
 
           {error && (

@@ -221,6 +221,25 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
+        {/* Performance Metrics */}
+        <div className="grid md:grid-cols-3 gap-6 mb-8">
+          <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-lg p-6 text-white text-center transform transition-transform hover:scale-105">
+            <div className="text-4xl mb-2">⏱️</div>
+            <div className="text-3xl font-bold mb-1">12 hrs/week</div>
+            <div className="text-sm opacity-90 font-medium">Time Saved by Automation</div>
+          </div>
+          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg p-6 text-white text-center transform transition-transform hover:scale-105">
+            <div className="text-4xl mb-2">📉</div>
+            <div className="text-3xl font-bold mb-1">-18%</div>
+            <div className="text-sm opacity-90 font-medium">Reduced Empty Miles</div>
+          </div>
+          <div className="bg-gradient-to-br from-orange to-red-500 rounded-xl shadow-lg p-6 text-white text-center transform transition-transform hover:scale-105">
+            <div className="text-4xl mb-2">🚀</div>
+            <div className="text-3xl font-bold mb-1">+24%</div>
+            <div className="text-sm opacity-90 font-medium">Increased Load Efficiency</div>
+          </div>
+        </div>
+
         {/* Filter Section */}
         <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">

@@ -120,7 +120,7 @@ const Navbar: React.FC = () => {
               }}
               className="hidden md:block text-white hover:text-orange font-semibold transition-colors"
             >
-              {localStorage.getItem('isAuthenticated') === 'true' ? 'Logout' : 'Login'}
+              {localStorage.getItem('isAuthenticated') === 'true' ? 'Logout' : 'Demo Login'}
             </button>
             <button 
               onClick={() => {
@@ -211,7 +211,7 @@ const Navbar: React.FC = () => {
                   }}
                   className="text-left text-white hover:text-orange font-semibold transition-colors"
                 >
-                  {localStorage.getItem('isAuthenticated') === 'true' ? 'Logout' : 'Login'}
+                  {localStorage.getItem('isAuthenticated') === 'true' ? 'Logout' : 'Demo Login'}
                 </button>
                 <button 
                   onClick={() => {

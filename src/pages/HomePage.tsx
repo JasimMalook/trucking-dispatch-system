@@ -3,6 +3,7 @@ import Hero from '../components/Hero';
 import TargetAudience from '../components/TargetAudience';
 import HowItWorks from '../components/HowItWorks';
 import SmartFeatures from '../components/SmartFeatures';
+import SaaSPreviewSection from '../components/SaaSPreviewSection';
 import Services from '../components/Services';
 import Testimonials from '../components/Testimonials';
 import Pricing from '../components/Pricing';
@@ -33,6 +34,7 @@ const HomePage: React.FC = () => {
       <Hero />
       <TargetAudience />
       <HowItWorks />
+      <SaaSPreviewSection />
       <SmartFeatures />
       <Services />
       <Testimonials />

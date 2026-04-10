@@ -25,11 +25,11 @@ const Hero: React.FC = () => {
           </h1>
           
           <p className="text-xl md:text-2xl mb-4 text-orange max-w-3xl mx-auto font-medium">
-            Built for Freight Brokers, Trucking Companies, and Owner Operators.
+            Get more loads, reduce empty miles, and automate dispatch operations.
           </p>
           
           <p className="text-lg md:text-xl mb-10 text-blue-200 max-w-2xl mx-auto">
-            Manage loads, drivers, invoices, and automation in one powerful platform designed for modern trucking businesses.
+            Built specifically for trucking companies and freight brokers to maximize efficiency and grow revenue.
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
