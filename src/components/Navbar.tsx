@@ -57,25 +57,25 @@ const Navbar: React.FC = () => {
           
           <div className="hidden md:flex space-x-8">
             <a 
-              href="#services" 
+              href="#features" 
               className="text-white hover:text-orange transition-colors"
-              onClick={(e) => handleNavClick(e, 'services')}
+              onClick={(e) => handleNavClick(e, 'features')}
             >
-              Services
+              Platform
             </a>
             <a 
-              href="#how-it-works" 
+              href="#driver-benefits" 
               className="text-white hover:text-orange transition-colors"
-              onClick={(e) => handleNavClick(e, 'how-it-works')}
+              onClick={(e) => handleNavClick(e, 'driver-benefits')}
             >
-              How It Works
+              Benefits
             </a>
             <a 
-              href="#testimonials" 
+              href="#pricing" 
               className="text-white hover:text-orange transition-colors"
-              onClick={(e) => handleNavClick(e, 'testimonials')}
+              onClick={(e) => handleNavClick(e, 'pricing')}
             >
-              Testimonials
+              Pricing
             </a>
             <a
               href="/dashboard"
@@ -141,25 +141,25 @@ const Navbar: React.FC = () => {
           <div className="md:hidden bg-dark-blue border-t border-gray-700 py-4 absolute left-0 right-0 top-16 shadow-xl">
             <div className="flex flex-col space-y-4 px-4 pb-4">
               <a 
-                href="#services" 
+                href="#features" 
                 className="text-white hover:text-orange transition-colors"
-                onClick={(e) => handleNavClick(e, 'services')}
+                onClick={(e) => handleNavClick(e, 'features')}
               >
-                Services
+                Platform
               </a>
               <a 
-                href="#how-it-works" 
+                href="#driver-benefits" 
                 className="text-white hover:text-orange transition-colors"
-                onClick={(e) => handleNavClick(e, 'how-it-works')}
+                onClick={(e) => handleNavClick(e, 'driver-benefits')}
               >
-                How It Works
+                Benefits
               </a>
               <a 
-                href="#testimonials" 
+                href="#pricing" 
                 className="text-white hover:text-orange transition-colors"
-                onClick={(e) => handleNavClick(e, 'testimonials')}
+                onClick={(e) => handleNavClick(e, 'pricing')}
               >
-                Testimonials
+                Pricing
               </a>
               <a
                 href="/dashboard"
