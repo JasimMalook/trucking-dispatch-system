@@ -164,7 +164,16 @@ const Dashboard: React.FC = () => {
     <section id="dashboard" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-dark-blue mb-4">Powerful Dispatch Control Center</h1>
+          <h1 className="text-4xl font-bold text-dark-blue mb-4 flex items-center justify-center">
+            <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-4 shadow-sm rounded-lg">
+              <rect width="32" height="32" rx="8" fill="#ff6b35"/>
+              <path d="M8 15V20C8 21.1 8.9 22 10 22H22C23.1 22 24 21.1 24 20V15L20 11H10C8.9 11 8 11.9 8 13V15Z" fill="white"/>
+              <path d="M20 11V15H24L20 11Z" fill="#ff9b73"/>
+              <circle cx="12" cy="22" r="2.5" fill="#1e3a5f"/>
+              <circle cx="20" cy="22" r="2.5" fill="#1e3a5f"/>
+            </svg>
+            Trucking Dispatch Pro Control Center
+          </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-6">
             Manage drivers, track loads, communicate with brokers, and automate your dispatch operations.
           </p>

@@ -40,8 +40,15 @@ const Navbar: React.FC = () => {
     }`}>
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-          <div className="flex items-center">
-            <div className="text-white font-bold text-xl">
+          <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-3">
+              <rect width="32" height="32" rx="8" fill="#ff6b35"/>
+              <path d="M8 15V20C8 21.1 8.9 22 10 22H22C23.1 22 24 21.1 24 20V15L20 11H10C8.9 11 8 11.9 8 13V15Z" fill="white"/>
+              <path d="M20 11V15H24L20 11Z" fill="#ff9b73"/>
+              <circle cx="12" cy="22" r="2.5" fill="#1e3a5f"/>
+              <circle cx="20" cy="22" r="2.5" fill="#1e3a5f"/>
+            </svg>
+            <div className="text-white font-bold text-xl tracking-tight">
               Trucking Dispatch Pro
             </div>
           </div>

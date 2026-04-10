@@ -20,8 +20,20 @@ const LoginPage: React.FC = () => {
   return (
     <div className="min-h-[80vh] flex items-center justify-center bg-gray-50 px-4 py-12 border-t border-gray-200">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in-up">
-        <div className="bg-gradient-to-r from-dark-blue to-blue-900 p-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-2">Welcome Back</h2>
+        <div className="bg-gradient-to-r from-dark-blue to-blue-900 p-8 text-center flex flex-col items-center">
+          <div className="flex items-center justify-center mb-6">
+            <svg width="36" height="36" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-3 shadow-lg rounded-lg">
+              <rect width="32" height="32" rx="8" fill="#ff6b35"/>
+              <path d="M8 15V20C8 21.1 8.9 22 10 22H22C23.1 22 24 21.1 24 20V15L20 11H10C8.9 11 8 11.9 8 13V15Z" fill="white"/>
+              <path d="M20 11V15H24L20 11Z" fill="#ff9b73"/>
+              <circle cx="12" cy="22" r="2.5" fill="#1e3a5f"/>
+              <circle cx="20" cy="22" r="2.5" fill="#1e3a5f"/>
+            </svg>
+            <div className="text-white font-bold text-2xl tracking-tight">
+              Trucking Dispatch Pro
+            </div>
+          </div>
+          <h2 className="text-2xl font-bold text-white mb-2">Welcome Back</h2>
           <p className="text-blue-200">Sign in to your dispatch control center</p>
         </div>
         
