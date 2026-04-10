@@ -29,18 +29,7 @@ const Navbar: React.FC = () => {
     }
   };
 
-  const handleQuoteClick = () => {
-    if (location.pathname !== '/') {
-      sessionStorage.setItem('pendingScrollTarget', 'contact');
-      navigate('/');
-      return;
-    }
 
-    const element = document.getElementById('contact');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   // Make the navbar solid immediately on non-home pages
   const isSolid = isScrolled || location.pathname !== '/';
