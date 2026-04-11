@@ -14,14 +14,13 @@ const FloatingButtons: React.FC = () => {
   }, []);
 
   const handleWhatsAppClick = () => {
-    const phoneNumber = '15551234567'; // Replace with actual phone number
+    const phoneNumber = '923000947499';
     const message = encodeURIComponent('Hi! I\'m interested in your trucking dispatch services. Can you provide more information?');
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
 
   const handleCallClick = () => {
-    const phoneNumber = '15551234567'; // Replace with actual phone number
-    window.open(`tel:${phoneNumber}`, '_self');
+    window.open('tel:+923000947499', '_self');
   };
 
   return (
