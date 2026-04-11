@@ -138,9 +138,23 @@ const DemoBookingModal: React.FC<DemoBookingModalProps> = ({ isOpen, onClose }) 
                 ✓
               </div>
               <h3 className="text-xl md:text-2xl font-bold text-dark-blue mb-2">You're Scheduled!</h3>
-              <p className="text-sm md:text-base text-gray-600 mb-8">
+              <p className="text-sm md:text-base text-gray-600 mb-6">
                 A calendar invitation has been sent to your email address.
               </p>
+              <div className="bg-gray-50 rounded-xl p-5 mb-6 w-full text-left border border-gray-100">
+                <p className="text-sm font-semibold text-dark-blue mb-3">Need to reach us sooner?</p>
+                <div className="space-y-2 text-sm">
+                  <a href="mailto:jasimmalook@gmail.com" className="flex items-center text-gray-600 hover:text-orange transition-colors">
+                    <span className="mr-2">📧</span> jasimmalook@gmail.com
+                  </a>
+                  <a href="tel:+923000947499" className="flex items-center text-gray-600 hover:text-orange transition-colors">
+                    <span className="mr-2">📞</span> +92 300 094 7499
+                  </a>
+                  <a href="https://wa.me/923000947499" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-600 hover:text-green-500 transition-colors">
+                    <span className="mr-2">💬</span> WhatsApp: +92 300 094 7499
+                  </a>
+                </div>
+              </div>
               <button 
                 onClick={resetAndClose}
                 className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-3 px-8 rounded-lg transition-colors"

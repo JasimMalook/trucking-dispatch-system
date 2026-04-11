@@ -217,10 +217,14 @@ const Contact: React.FC = () => {
               <div className="text-6xl mb-4">🎉</div>
               <h2 className="text-3xl font-bold mb-4 text-green-400">Thank You!</h2>
               <p className="text-xl mb-6">Your free quote request has been submitted successfully!</p>
-              <p className="text-lg font-semibold text-orange mb-8">
-                📞 Our dispatch team will contact you within 10 minutes
+              <p className="text-lg font-semibold text-orange mb-4">
+                📞 Our dispatch team will contact you shortly
               </p>
-              <p className="text-gray-300 mb-8">While you wait, see how our automation system works in real-time:</p>
+              <div className="flex flex-wrap justify-center gap-4 mb-8 text-sm">
+                <a href="mailto:jasimmalook@gmail.com" className="bg-dark-blue bg-opacity-50 hover:bg-opacity-70 px-4 py-2 rounded-lg transition-colors">📧 jasimmalook@gmail.com</a>
+                <a href="https://wa.me/923000947499" target="_blank" rel="noopener noreferrer" className="bg-green-700 bg-opacity-50 hover:bg-opacity-70 px-4 py-2 rounded-lg transition-colors">💬 WhatsApp: +92 300 094 7499</a>
+                <a href="tel:+923000947499" className="bg-dark-blue bg-opacity-50 hover:bg-opacity-70 px-4 py-2 rounded-lg transition-colors">📞 +92 300 094 7499</a>
+              </div>
               
               <div className="bg-dark-blue bg-opacity-50 rounded-lg p-6 text-left mb-8">
                 <h3 className="text-lg font-semibold mb-4 text-orange">Request Summary:</h3>
