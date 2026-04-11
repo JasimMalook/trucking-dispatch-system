@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import Hero from '../components/Hero';
+import TrustBadges from '../components/TrustBadges';
 import TargetAudience from '../components/TargetAudience';
 import HowItWorks from '../components/HowItWorks';
+import WhySwitch from '../components/WhySwitch';
 import SmartFeatures from '../components/SmartFeatures';
 import SaaSPreviewSection from '../components/SaaSPreviewSection';
 import Services from '../components/Services';
@@ -32,8 +34,10 @@ const HomePage: React.FC = () => {
   return (
     <>
       <Hero />
+      <TrustBadges />
       <TargetAudience />
       <HowItWorks />
+      <WhySwitch />
       <SaaSPreviewSection />
       <SmartFeatures />
       <Services />

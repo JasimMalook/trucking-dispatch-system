@@ -1,50 +1,46 @@
 import React from 'react';
 
 const TrustBadges: React.FC = () => {
-  const badges = [
+  const stats = [
     {
+      value: '100+',
+      label: 'Drivers Managed',
       icon: '👥',
-      text: '100+ Drivers Managed',
-      description: 'Trusted by fleet owners nationwide'
+      color: 'text-blue-500',
     },
     {
-      icon: '📞',
-      text: '24/7 Support',
-      description: 'Always here when you need us'
+      value: '500+',
+      label: 'Loads Dispatched',
+      icon: '📦',
+      color: 'text-orange',
     },
     {
-      icon: '⭐',
-      text: '4.9/5 Rating',
-      description: 'Industry-leading satisfaction'
+      value: '24/7',
+      label: 'Dispatch Support',
+      icon: '🛡️',
+      color: 'text-green-500',
     },
     {
-      icon: '🚚',
-      text: '5000+ Loads Booked',
-      description: 'Proven track record'
+      value: 'USA',
+      label: 'Built for US Trucking',
+      icon: '🇺🇸',
+      color: 'text-dark-blue',
     },
-    {
-      icon: '💰',
-      text: '$2M+ Revenue Generated',
-      description: 'Maximizing driver earnings'
-    },
-    {
-      icon: '🏆',
-      text: 'Award Winning Service',
-      description: 'Recognized excellence'
-    }
   ];
 
   return (
-    <section className="py-12 bg-white border-y border-gray-200">
+    <section className="py-14 bg-white border-y border-gray-100">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
-          {badges.map((badge, index) => (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+          {stats.map((stat, index) => (
             <div key={index} className="text-center group">
-              <div className="text-4xl mb-2 group-hover:scale-110 transition-transform duration-300">
-                {badge.icon}
+              <div className="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">
+                {stat.icon}
               </div>
-              <div className="font-bold text-dark-blue mb-1">{badge.text}</div>
-              <div className="text-sm text-gray-600">{badge.description}</div>
+              <div className={`text-2xl md:text-3xl font-extrabold ${stat.color} mb-1`}>
+                {stat.value}
+              </div>
+              <div className="text-sm text-gray-500 font-medium">{stat.label}</div>
             </div>
           ))}
         </div>
