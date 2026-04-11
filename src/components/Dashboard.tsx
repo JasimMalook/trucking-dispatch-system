@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
+import Logo from './Logo';
 
 interface DriverData {
   id: number;
@@ -10,6 +11,34 @@ interface DriverData {
   location: string;
   pickupDate: string;
   deliveryDate: string;
+}
+
+/** Hook: animates a number from 0 to `end` over `duration` ms */
+function useCountUp(end: number, duration = 1200) {
+  const [value, setValue] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const animated = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !animated.current) {
+        animated.current = true;
+        const start = performance.now();
+        const step = (now: number) => {
+          const progress = Math.min((now - start) / duration, 1);
+          setValue(Math.round(end * progress));
+          if (progress < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      }
+    }, { threshold: 0.3 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [end, duration]);
+
+  return { value, ref };
 }
 
 const Dashboard: React.FC = () => {
@@ -160,31 +189,55 @@ const Dashboard: React.FC = () => {
   const activeDrivers = filteredDrivers.filter(driver => driver.status === 'In Transit').length;
   const deliveredToday = filteredDrivers.filter(driver => driver.status === 'Delivered').length;
 
+  // Animated count-up hooks for performance metrics
+  const timeSaved = useCountUp(12);
+  const emptyMiles = useCountUp(18);
+  const efficiency = useCountUp(24);
+
+  // Dispatch activity log entries
+  const activityLog = [
+    { time: '2 min ago', event: 'Load #LD-9021 picked up', driver: 'Mike Johnson', type: 'pickup' },
+    { time: '15 min ago', event: 'Rate confirmed at $3,200', driver: 'Broker: FreightMax', type: 'rate' },
+    { time: '28 min ago', event: 'Load #LD-9023 delivered', driver: 'Tom Chen', type: 'delivery' },
+    { time: '45 min ago', event: 'Driver check-in completed', driver: 'Sarah Williams', type: 'checkin' },
+    { time: '1 hr ago', event: 'New load assigned #LD-9024', driver: 'Maria Garcia', type: 'assign' },
+    { time: '1.5 hrs ago', event: 'Invoice #INV-4521 sent', driver: 'James Wilson', type: 'invoice' },
+    { time: '2 hrs ago', event: 'POD uploaded for #LD-9019', driver: 'David Kim', type: 'pod' },
+    { time: '3 hrs ago', event: 'Driver onboarded', driver: 'Robert Taylor', type: 'onboard' },
+  ];
+
+  const getActivityIcon = (type: string) => {
+    switch (type) {
+      case 'pickup': return '📦';
+      case 'rate': return '💲';
+      case 'delivery': return '✅';
+      case 'checkin': return '📍';
+      case 'assign': return '🔗';
+      case 'invoice': return '🧾';
+      case 'pod': return '📄';
+      case 'onboard': return '👤';
+      default: return '📋';
+    }
+  };
+
   return (
     <section id="dashboard" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-dark-blue mb-4 flex items-center justify-center">
-            <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-4 shadow-sm rounded-lg">
-              <rect width="32" height="32" rx="8" fill="#ff6b35"/>
-              <path d="M8 15V20C8 21.1 8.9 22 10 22H22C23.1 22 24 21.1 24 20V15L20 11H10C8.9 11 8 11.9 8 13V15Z" fill="white"/>
-              <path d="M20 11V15H24L20 11Z" fill="#ff9b73"/>
-              <circle cx="12" cy="22" r="2.5" fill="#1e3a5f"/>
-              <circle cx="20" cy="22" r="2.5" fill="#1e3a5f"/>
-            </svg>
+          <div className="flex items-center justify-center mb-4">
+            <Logo size={44} showText={false} />
+          </div>
+          <h1 className="text-3xl md:text-4xl font-bold text-dark-blue mb-4">
             Trucking Dispatch Pro Control Center
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-6">
             Manage drivers, track loads, communicate with brokers, and automate your dispatch operations.
           </p>
-          <button className="bg-orange hover:bg-orange-600 text-white font-bold px-8 py-3 rounded-lg transition-colors shadow-lg">
-            Explore Dashboard
-          </button>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-orange">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8 stagger-children">
+          <div className="bg-white rounded-xl shadow-lg p-5 md:p-6 border-l-4 border-orange">
             <div className="flex items-center justify-between mb-2">
               <span className="text-gray-500 text-sm">Total Drivers</span>
               <span className="text-2xl">👥</span>
@@ -193,16 +246,19 @@ const Dashboard: React.FC = () => {
             <div className="text-green-600 text-sm">Active fleet</div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500">
+          <div className="bg-white rounded-xl shadow-lg p-5 md:p-6 border-l-4 border-blue-500">
             <div className="flex items-center justify-between mb-2">
               <span className="text-gray-500 text-sm">In Transit</span>
               <span className="text-2xl">🚚</span>
             </div>
             <div className="text-3xl font-bold text-dark-blue">{activeDrivers}</div>
-            <div className="text-blue-600 text-sm">On the road</div>
+            <div className="text-blue-600 text-sm flex items-center">
+              <span className="w-2 h-2 bg-blue-500 rounded-full mr-2 animate-status-pulse"></span>
+              On the road
+            </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500">
+          <div className="bg-white rounded-xl shadow-lg p-5 md:p-6 border-l-4 border-green-500">
             <div className="flex items-center justify-between mb-2">
               <span className="text-gray-500 text-sm">Delivered Today</span>
               <span className="text-2xl">✅</span>
@@ -211,7 +267,7 @@ const Dashboard: React.FC = () => {
             <div className="text-green-600 text-sm">Completed</div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-500">
+          <div className="bg-white rounded-xl shadow-lg p-5 md:p-6 border-l-4 border-purple-500">
             <div className="flex items-center justify-between mb-2">
               <span className="text-gray-500 text-sm">Total Earnings</span>
               <span className="text-2xl">💰</span>
@@ -221,134 +277,178 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Performance Metrics */}
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-lg p-6 text-white text-center transform transition-transform hover:scale-105">
+        {/* Performance Metrics with animated count-up */}
+        <div className="grid md:grid-cols-3 gap-4 md:gap-6 mb-8">
+          <div ref={timeSaved.ref} className="bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl shadow-lg p-6 text-white text-center transform transition-transform hover:scale-105">
             <div className="text-4xl mb-2">⏱️</div>
-            <div className="text-3xl font-bold mb-1">12 hrs/week</div>
+            <div className="text-3xl font-bold mb-1">{timeSaved.value} hrs/week</div>
             <div className="text-sm opacity-90 font-medium">Time Saved by Automation</div>
+            <div className="mt-3 bg-white bg-opacity-20 rounded-full h-2 overflow-hidden">
+              <div className="bg-white h-full rounded-full animate-progress-fill" style={{ width: '75%' }}></div>
+            </div>
           </div>
-          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg p-6 text-white text-center transform transition-transform hover:scale-105">
+          <div ref={emptyMiles.ref} className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl shadow-lg p-6 text-white text-center transform transition-transform hover:scale-105">
             <div className="text-4xl mb-2">📉</div>
-            <div className="text-3xl font-bold mb-1">-18%</div>
+            <div className="text-3xl font-bold mb-1">-{emptyMiles.value}%</div>
             <div className="text-sm opacity-90 font-medium">Reduced Empty Miles</div>
+            <div className="mt-3 bg-white bg-opacity-20 rounded-full h-2 overflow-hidden">
+              <div className="bg-white h-full rounded-full animate-progress-fill" style={{ width: '82%' }}></div>
+            </div>
           </div>
-          <div className="bg-gradient-to-br from-orange to-red-500 rounded-xl shadow-lg p-6 text-white text-center transform transition-transform hover:scale-105">
+          <div ref={efficiency.ref} className="bg-gradient-to-br from-orange to-red-500 rounded-xl shadow-lg p-6 text-white text-center transform transition-transform hover:scale-105">
             <div className="text-4xl mb-2">🚀</div>
-            <div className="text-3xl font-bold mb-1">+24%</div>
+            <div className="text-3xl font-bold mb-1">+{efficiency.value}%</div>
             <div className="text-sm opacity-90 font-medium">Increased Load Efficiency</div>
+            <div className="mt-3 bg-white bg-opacity-20 rounded-full h-2 overflow-hidden">
+              <div className="bg-white h-full rounded-full animate-progress-fill" style={{ width: '68%' }}></div>
+            </div>
           </div>
         </div>
 
-        {/* Filter Section */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-            <h2 className="text-2xl font-bold text-dark-blue mb-4 md:mb-0">Driver Operations</h2>
-            
-            <div className="flex items-center space-x-4">
-              <label htmlFor="status-filter" className="text-sm font-medium text-gray-700">
-                Filter by Status:
-              </label>
-              <select
-                id="status-filter"
-                value={selectedStatus}
-                onChange={(e) => setSelectedStatus(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange focus:border-transparent"
-              >
-                <option value="all">All Drivers</option>
-                <option value="In Transit">In Transit</option>
-                <option value="Delivered">Delivered</option>
-                <option value="Pending">Pending</option>
-              </select>
+        {/* Two-column: Driver Table + Activity Log */}
+        <div className="grid lg:grid-cols-3 gap-6 mb-8">
+          {/* Driver Operations Table - 2/3 width */}
+          <div className="lg:col-span-2 bg-white rounded-xl shadow-lg p-6">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+              <h2 className="text-2xl font-bold text-dark-blue mb-4 md:mb-0">Driver Operations</h2>
+              
+              <div className="flex items-center space-x-4">
+                <label htmlFor="status-filter" className="text-sm font-medium text-gray-700">
+                  Filter:
+                </label>
+                <select
+                  id="status-filter"
+                  value={selectedStatus}
+                  onChange={(e) => setSelectedStatus(e.target.value)}
+                  className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange focus:border-transparent text-sm"
+                >
+                  <option value="all">All Drivers</option>
+                  <option value="In Transit">In Transit</option>
+                  <option value="Delivered">Delivered</option>
+                  <option value="Pending">Pending</option>
+                </select>
+              </div>
             </div>
-          </div>
 
-          {/* Table */}
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-gray-200">
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">Driver Name</th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">Truck Type</th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">Current Load</th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">Location</th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">Status</th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">Earnings</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredDrivers.map((driver) => (
-                  <tr key={driver.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                    <td className="py-4 px-4">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 bg-orange rounded-full flex items-center justify-center text-white font-bold">
-                          {driver.driverName.split(' ').map(n => n[0]).join('')}
-                        </div>
-                        <div>
-                          <div className="font-medium text-gray-900">{driver.driverName}</div>
-                          <div className="text-sm text-gray-500">ID: #{driver.id.toString().padStart(4, '0')}</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="py-4 px-4">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-xl">{getTruckIcon(driver.truckType)}</span>
-                        <span className="text-gray-700">{driver.truckType}</span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-4">
-                      <div className="max-w-xs">
-                        <div className="text-gray-900 font-medium">{driver.currentLoad}</div>
-                        <div className="text-sm text-gray-500">
-                          {driver.pickupDate !== '-' && `Pickup: ${driver.pickupDate}`}
-                        </div>
-                      </div>
-                    </td>
-                    <td className="py-4 px-4">
-                      <div className="text-gray-700">{driver.location}</div>
-                    </td>
-                    <td className="py-4 px-4">
-                      <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getStatusColor(driver.status)}`}>
-                        <span className="mr-1">{getStatusIcon(driver.status)}</span>
-                        {driver.status}
-                      </span>
-                    </td>
-                    <td className="py-4 px-4">
-                      <div className={`font-bold ${driver.earnings === '$0' ? 'text-gray-400' : 'text-green-600'}`}>
-                        {driver.earnings}
-                      </div>
-                    </td>
+            {/* Table */}
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-gray-200">
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700 text-sm">Driver Name</th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700 text-sm">Truck Type</th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700 text-sm hidden md:table-cell">Current Load</th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700 text-sm hidden lg:table-cell">Location</th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700 text-sm">Status</th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700 text-sm">Earnings</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {filteredDrivers.map((driver) => (
+                    <tr key={driver.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                      <td className="py-4 px-4">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-10 h-10 bg-orange rounded-full flex items-center justify-center text-white font-bold text-sm">
+                            {driver.driverName.split(' ').map(n => n[0]).join('')}
+                          </div>
+                          <div>
+                            <div className="font-medium text-gray-900 text-sm">{driver.driverName}</div>
+                            <div className="text-xs text-gray-500">ID: #{driver.id.toString().padStart(4, '0')}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4">
+                        <div className="flex items-center space-x-2">
+                          <span className="text-lg">{getTruckIcon(driver.truckType)}</span>
+                          <span className="text-gray-700 text-sm">{driver.truckType}</span>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4 hidden md:table-cell">
+                        <div className="max-w-xs">
+                          <div className="text-gray-900 text-sm">{driver.currentLoad}</div>
+                          <div className="text-xs text-gray-500">
+                            {driver.pickupDate !== '-' && `Pickup: ${driver.pickupDate}`}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4 hidden lg:table-cell">
+                        <div className="text-gray-700 text-sm">{driver.location}</div>
+                      </td>
+                      <td className="py-4 px-4">
+                        <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border ${getStatusColor(driver.status)}`}>
+                          {driver.status === 'In Transit' && <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-1.5 animate-status-pulse"></span>}
+                          <span className="mr-1">{getStatusIcon(driver.status)}</span>
+                          {driver.status}
+                        </span>
+                      </td>
+                      <td className="py-4 px-4">
+                        <div className={`font-bold text-sm ${driver.earnings === '$0' ? 'text-gray-400' : 'text-green-600'}`}>
+                          {driver.earnings}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {filteredDrivers.length === 0 && (
+              <div className="text-center py-12">
+                <div className="text-6xl mb-4">🔍</div>
+                <h3 className="text-xl font-semibold text-gray-700 mb-2">No drivers found</h3>
+                <p className="text-gray-500">Try adjusting your filter criteria</p>
+              </div>
+            )}
           </div>
 
-          {filteredDrivers.length === 0 && (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-xl font-semibold text-gray-700 mb-2">No drivers found</h3>
-              <p className="text-gray-500">Try adjusting your filter criteria</p>
+          {/* Activity Log - 1/3 width */}
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-lg font-bold text-dark-blue">Dispatch Activity</h2>
+              <span className="text-xs text-green-600 bg-green-50 px-2.5 py-1 rounded-full font-medium flex items-center">
+                <span className="w-1.5 h-1.5 bg-green-500 rounded-full mr-1.5 animate-status-pulse"></span>
+                Live
+              </span>
             </div>
-          )}
+            <div className="space-y-4 max-h-[500px] overflow-y-auto pr-1">
+              {activityLog.map((entry, i) => (
+                <div key={i} className="flex items-start space-x-3 pb-4 border-b border-gray-50 last:border-0">
+                  <div className="w-8 h-8 bg-gray-50 rounded-lg flex items-center justify-center text-sm flex-shrink-0 mt-0.5">
+                    {getActivityIcon(entry.type)}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm text-gray-800 font-medium leading-snug">{entry.event}</p>
+                    <p className="text-xs text-gray-500 mt-0.5">{entry.driver}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">{entry.time}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Summary Section */}
-        <div className="bg-dark-blue rounded-xl shadow-lg p-8 text-white">
-          <div className="text-center">
+        <div className="bg-gradient-to-br from-dark-blue to-blue-900 rounded-xl shadow-lg p-8 text-white relative overflow-hidden">
+          {/* Subtle route animation */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <svg className="w-full h-full opacity-5" preserveAspectRatio="none">
+              <line x1="0" y1="40%" x2="100%" y2="60%" stroke="white" strokeWidth="1" strokeDasharray="8 6" className="animate-route-pulse" />
+            </svg>
+          </div>
+          <div className="text-center relative z-10">
             <h3 className="text-2xl font-bold mb-4">Fleet Summary</h3>
-            <div className="grid md:grid-cols-3 gap-8 mt-8">
+            <div className="grid grid-cols-3 gap-4 md:gap-8 mt-8">
               <div>
-                <div className="text-4xl font-bold text-orange mb-2">{filteredDrivers.length}</div>
-                <div className="text-blue-200">Total Drivers</div>
+                <div className="text-3xl md:text-4xl font-bold text-orange mb-2">{filteredDrivers.length}</div>
+                <div className="text-blue-200 text-sm md:text-base">Total Drivers</div>
               </div>
               <div>
-                <div className="text-4xl font-bold text-green-400 mb-2">${totalEarnings.toLocaleString()}</div>
-                <div className="text-blue-200">Total Revenue</div>
+                <div className="text-3xl md:text-4xl font-bold text-green-400 mb-2">${totalEarnings.toLocaleString()}</div>
+                <div className="text-blue-200 text-sm md:text-base">Total Revenue</div>
               </div>
               <div>
-                <div className="text-4xl font-bold text-blue-400 mb-2">{Math.round((deliveredToday / filteredDrivers.length) * 100) || 0}%</div>
-                <div className="text-blue-200">Delivery Rate</div>
+                <div className="text-3xl md:text-4xl font-bold text-blue-400 mb-2">{Math.round((deliveredToday / filteredDrivers.length) * 100) || 0}%</div>
+                <div className="text-blue-200 text-sm md:text-base">Delivery Rate</div>
               </div>
             </div>
           </div>

@@ -9,6 +9,9 @@ module.exports = {
         'dark-blue': '#1e3a5f',
         'orange': '#ff6b35',
       },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+      },
     },
   },
   plugins: [],
